@@ -5,6 +5,7 @@ import type {Assets} from "../webutil/assets";
 import {TimelineExplorer} from "./TimelineExplorer";
 import {TimelineCred} from "../analysis/timeline/timelineCred";
 import {declaration as githubDeclaration} from "../plugins/github/declaration";
+import {declaration as discourseDeclaration} from "../plugins/discourse/declaration";
 import {DEFAULT_CRED_CONFIG} from "../plugins/defaultCredConfig";
 import {encodeProjectId, type ProjectId} from "../core/project";
 
@@ -69,7 +70,7 @@ export class TimelineApp extends React.Component<Props, State> {
           <TimelineExplorer
             initialTimelineCred={timelineCred}
             projectId={this.props.projectId}
-            declarations={[githubDeclaration]}
+            declarations={[discourseDeclaration]}
           />
         );
       }

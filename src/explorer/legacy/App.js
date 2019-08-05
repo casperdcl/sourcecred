@@ -9,6 +9,10 @@ import BrowserLocalStore from "../../webutil/browserLocalStore";
 import Link from "../../webutil/Link";
 import {type NodeAddressT} from "../../core/graph";
 import {declaration as githubDeclaration} from "../../plugins/github/declaration";
+import {
+  declaration as discourseDeclaration,
+  userNodeType,
+} from "../../plugins/discourse/declaration";
 
 import {PagerankTable} from "./pagerankTable/Table";
 import {WeightConfig} from "../weights/WeightConfig";
@@ -21,7 +25,7 @@ import {
   type StateTransitionMachineInterface,
   initialState,
 } from "./state";
-import {userNodeType} from "../../plugins/github/declaration";
+//import {userNodeType} from "../../plugins/github/declaration";
 
 const credOverviewUrl =
   "https://discourse.sourcecred.io/t/a-gentle-introduction-to-cred/20";
@@ -86,7 +90,7 @@ export function createApp(
       const {appState} = this.state;
       const weightConfig = (
         <WeightConfig
-          declarations={[githubDeclaration]}
+          declarations={[discourseDeclaration]}
           nodeTypeWeights={this.state.weights.nodeTypeWeights}
           edgeTypeWeights={this.state.weights.edgeTypeWeights}
           onNodeWeightChange={(prefix, weight) => {
@@ -120,7 +124,7 @@ export function createApp(
             weightConfig={weightConfig}
             weightFileManager={weightFileManager}
             manualWeights={this.state.weights.nodeManualWeights}
-            declarations={[githubDeclaration]}
+            declarations={[discourseDeclaration]}
             graph={appState.graph}
             onManualWeightsChange={(addr: NodeAddressT, weight: number) =>
               this.setState(({weights}) => {
@@ -160,10 +164,10 @@ export function createApp(
                 this.props.assets,
                 this.state.weights,
                 {
-                  nodeTypes: githubDeclaration.nodeTypes.slice(),
-                  edgeTypes: githubDeclaration.edgeTypes.slice(),
+                  nodeTypes: discourseDeclaration.nodeTypes.slice(),
+                  edgeTypes: discourseDeclaration.edgeTypes.slice(),
                 },
-                GithubPrefix.user
+                userNodeType.prefix
               )
             }
           >

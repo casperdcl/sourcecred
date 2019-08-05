@@ -3,8 +3,10 @@
 import fs from "fs-extra";
 import path from "path";
 
+import * as NullUtil from "../util/null";
 import {TaskReporter} from "../util/taskReporter";
 import {loadGraph} from "../plugins/github/loadGraph";
+import {loadDiscourse} from "../plugins/discourse/loadDiscourse";
 import {
   type TimelineCredParameters,
   TimelineCred,
@@ -52,7 +54,18 @@ export async function load(
     token: githubToken,
     cacheDirectory,
   };
-  const graph = await loadGraph(githubOptions, taskReporter);
+  //  const graph = await loadGraph(githubOptions, taskReporter);
+  // STOPSHIP: Huge hack!
+  const apiKey = NullUtil.get(process.env.SOURCECRED_DISCOURSE_KEY);
+  const fetchOptions = {
+    apiUsername: "credbot",
+    apiKey,
+    serverUrl: "https://discourse.sourcecred.io",
+  };
+  const graph = await loadDiscourse(
+    {fetchOptions, cacheDirectory},
+    taskReporter
+  );
 
   const projectDirectory = await setupProjectDirectory(
     project,
