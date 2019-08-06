@@ -19,7 +19,10 @@ export async function loadDiscourse(
   options: Options,
   reporter: TaskReporter
 ): Promise<Graph> {
-  const filename = base64url.encode(options.fetchOptions.serverUrl) + ".db";
+  const filename =
+    "discourse_mirror" +
+    base64url.encode(options.fetchOptions.serverUrl) +
+    ".db";
   const db = new Database(path.join(options.cacheDirectory, filename));
   const fetcher = new DiscourseFetcher(options.fetchOptions);
   const mirror = new Mirror(db, fetcher, options.fetchOptions.serverUrl);
